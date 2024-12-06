@@ -74,7 +74,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 flex items-center">
+            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-0">
               Moje Portfolio
             </h1>
           </div>
@@ -122,7 +122,7 @@ export default function Home() {
                       <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-4">
                           {project.icon}
-                          <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                          <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 flex items-center h-12">
                             {project.name}
                           </h3>
                         </div>
@@ -188,7 +188,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                  <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-0">
                     Programování s AI
                     <Sparkles className="inline-block w-5 h-5 ml-2 text-yellow-400 animate-pulse" />
                   </h2>
@@ -231,7 +231,7 @@ export default function Home() {
             
             <div className="flex items-center gap-2">
               <a
-                href="https://github.com/olliverSe"
+                href="https://github.com/Olinkkt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative p-2.5 rounded-lg hover:bg-gray-800/50 transition-all duration-300"
@@ -240,7 +240,7 @@ export default function Home() {
                 <FaGithub size={18} className="relative text-gray-400 group-hover:text-white transition-colors duration-300" />
               </a>
               <a
-                href="https://x.com/olliverseidl"
+                href="https://x.com/olinkkt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative p-2.5 rounded-lg hover:bg-gray-800/50 transition-all duration-300"
@@ -249,7 +249,7 @@ export default function Home() {
                 <FaXTwitter size={18} className="relative text-gray-400 group-hover:text-white transition-colors duration-300" />
               </a>
               <a
-                href="https://discord.com/users/olliver"
+                href="https://discord.com/users/omegha_yt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative p-2.5 rounded-lg hover:bg-gray-800/50 transition-all duration-300"
