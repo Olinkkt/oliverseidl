@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Brain, Sparkles, Code } from 'lucide-react'
+import { Briefcase, User, Mail, Code, Coffee, Heart, ChevronDown, ChevronUp, Globe, ExternalLink, Brain, Sparkles, Send } from 'lucide-react'
 import { FaGithub, FaXTwitter, FaDiscord } from 'react-icons/fa6'
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
