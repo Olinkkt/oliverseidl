@@ -1,11 +1,29 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import { Modal } from './ui/modal'
 import { Mail, Send } from 'lucide-react'
 
+interface FormData {
+  name: string
+  email: string
+  message: string
+}
+
 export function ContactPopup() {
   const [isOpen, setIsOpen] = useState(false)
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    message: ''
+  })
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    // Zde můžete implementovat logiku odesílání
+    console.log(formData)
+    setIsOpen(false)
+  }
 
   return (
     <>
@@ -18,13 +36,16 @@ export function ContactPopup() {
       </a>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Kontaktujte mě">
-        <form className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
               Vaše jméno
             </label>
             <input
               type="text"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-3 py-1.5 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white text-sm"
               placeholder="Jan Novák"
             />
@@ -36,6 +57,9 @@ export function ContactPopup() {
             </label>
             <input
               type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-3 py-1.5 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white text-sm"
               placeholder="jan@example.com"
             />
@@ -47,6 +71,9 @@ export function ContactPopup() {
             </label>
             <textarea
               rows={3}
+              required
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full px-3 py-1.5 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-purple-500 text-white text-sm resize-none"
               placeholder="Vaše zpráva..."
             />
