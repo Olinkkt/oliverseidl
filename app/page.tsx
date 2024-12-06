@@ -6,14 +6,7 @@ import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Brain, Sparkles
 import { FaGithub, FaXTwitter, FaDiscord } from 'react-icons/fa6'
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
-
-export const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { 
-    opacity: 1, 
-    y: 0
-  }
-}
+import { fadeInUp } from './animations'
 
 const containerVariants = {
   initial: "initial",
