@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Briefcase, User, Mail, Code, Coffee, Heart, ChevronDown, ChevronUp, Globe, ExternalLink, Brain, Sparkles, Send } from 'lucide-react'
+import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Brain, Sparkles, Code } from 'lucide-react'
 import { FaGithub, FaXTwitter, FaDiscord } from 'react-icons/fa6'
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
@@ -54,7 +54,6 @@ const projects = [
 
 export default function Home() {
   const [openStates, setOpenStates] = useState<{ [key: number]: boolean }>({})
-  const [hoveredId, setHoveredId] = useState<number | null>(null)
 
   const toggleOpen = (id: number) => {
     setOpenStates(prev => ({ ...prev, [id]: !prev[id] }))
@@ -63,7 +62,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 bg-gray-900/80 backdrop-blur-xl shadow-lg text-white py-4 border-b border-gray-800/50">
+      <header className="sticky top-0 bg-gray-900/80 backdrop-blur-xl shadow-lg text-white py-4 border-b border-gray-800/50 z-50">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <div className="flex items-center gap-4 group">
             <div className="w-12 h-12 relative">
@@ -112,8 +111,6 @@ export default function Home() {
                 <div
                   key={project.id}
                   className="group relative"
-                  onMouseEnter={() => setHoveredId(project.id)}
-                  onMouseLeave={() => setHoveredId(null)}
                 >
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
                   
