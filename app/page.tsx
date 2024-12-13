@@ -33,10 +33,10 @@ const projects = [
   },
   {
     id: 2,
-    name: 'Mobilní aplikace',
-    description: 'Mobilní aplikace pro Android a iOS vyvinutá v React Native',
-    url: 'https://example.com/project2',
-    image: '/path/to/image2.jpg',
+    name: 'To-Do List',
+    description: 'Responzivní aplikace pro správu úkolů s možností nastavení priority. Umožňuje uživatelům efektivně organizovat a sledovat své denní úkoly.',
+    url: 'https://to-do-list-beta-lyart-38.vercel.app/',
+    image: '/images/to-do.png',
     icon: <div className="w-12 h-12 relative">
       <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
       <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
@@ -130,10 +130,12 @@ export default function Home() {
                         </button>
                       </div>
 
-                      {/* Popis projektu */}
-                      <p className="text-gray-300 text-base leading-relaxed">
-                        {project.description}
-                      </p>
+                      {/* Popis projektu - fixní výška */}
+                      <div className="h-[100px] overflow-auto mb-4">
+                        <p className="text-gray-300 text-base leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
 
                       {/* Rozbalitelný obsah */}
                       <motion.div
@@ -141,7 +143,6 @@ export default function Home() {
                         animate={{ 
                           height: expandedProjects[project.id] ? 'auto' : 0,
                           opacity: expandedProjects[project.id] ? 1 : 0,
-                          marginBottom: expandedProjects[project.id] ? 16 : 0
                         }}
                         transition={{ 
                           duration: 0.3,
@@ -159,10 +160,11 @@ export default function Home() {
                             duration: 0.3,
                             ease: "easeInOut"
                           }}
+                          className="mb-6"
                         >
                           <div className="space-y-4">
                             {/* Obrázek projektu */}
-                            <div className="relative w-full h-[300px] rounded-lg overflow-hidden">
+                            <div className="relative aspect-[16/9] rounded-lg overflow-hidden">
                               <Image
                                 src={project.image}
                                 alt={project.name}
@@ -170,6 +172,7 @@ export default function Home() {
                                 className="object-cover rounded-lg"
                                 priority={project.id === 1}
                                 quality={90}
+                                sizes="(max-width: 768px) 100vw, 50vw"
                               />
                             </div>
                           </div>
@@ -177,7 +180,7 @@ export default function Home() {
                       </motion.div>
 
                       {/* Tlačítko - vždy na spodku karty */}
-                      <div className="mt-auto pt-4">
+                      <div className="mt-auto">
                         <a
                           href={project.url}
                           target="_blank"
