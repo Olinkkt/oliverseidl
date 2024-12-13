@@ -7,6 +7,7 @@ import { FaGithub, FaXTwitter, FaDiscord } from 'react-icons/fa6'
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
 import { fadeInUp } from './animations'
+import Image from 'next/image'
 
 const containerVariants = {
   initial: "initial",
@@ -17,9 +18,10 @@ const containerVariants = {
 const projects = [
   {
     id: 1,
-    name: 'Webová aplikace',
-    description: 'Responzivní webová aplikace vytvořená pomocí React a Next.js',
-    url: 'https://example.com/project1',
+    name: 'TDEE Kalkulačka',
+    description: 'Responzivní webová aplikace pro výpočet celkového denního energetického výdeje (TDEE). Pomáhá uživatelům lépe porozumět jejich energetickým potřebám pro efektivní řízení váhy.',
+    url: 'https://tdee-calculator-ruddy.vercel.app/',
+    image: '/images/tdee.png',
     icon: <div className="w-12 h-12 relative">
       <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
       <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
@@ -34,6 +36,7 @@ const projects = [
     name: 'Mobilní aplikace',
     description: 'Mobilní aplikace pro Android a iOS vyvinutá v React Native',
     url: 'https://example.com/project2',
+    image: '/path/to/image2.jpg',
     icon: <div className="w-12 h-12 relative">
       <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
       <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
@@ -46,10 +49,10 @@ const projects = [
 ]
 
 export default function Home() {
-  const [openStates, setOpenStates] = useState<{ [key: number]: boolean }>({})
+  const [expandedProjects, setExpandedProjects] = useState<{ [key: number]: boolean }>({})
 
-  const toggleOpen = (id: number) => {
-    setOpenStates(prev => ({ ...prev, [id]: !prev[id] }))
+  const toggleProject = (id: number) => {
+    setExpandedProjects(prev => ({ ...prev, [id]: !prev[id] }))
   }
 
   return (
@@ -106,56 +109,87 @@ export default function Home() {
           <section className="my-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
               {projects.map((project) => (
-                <div
-                  key={project.id}
-                  className="group relative"
-                >
+                <div key={project.id} className="group relative h-full">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
                   
-                  <div className="relative bg-gray-900/90 backdrop-blur-xl rounded-xl border border-gray-800/50 hover:border-purple-500/50 shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
-                    <div className="p-4 sm:p-8">
-                      <div className="flex items-center justify-between mb-4 sm:mb-6">
-                        <div className="flex items-center gap-2 sm:gap-4">
+                  <div className="relative h-full bg-gray-900/90 backdrop-blur-xl rounded-xl border border-gray-800/50 hover:border-purple-500/50 shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
+                    <div className="p-4 sm:p-6 h-full flex flex-col">
+                      {/* Hlavička karty */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
                           {project.icon}
-                          <h3 className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 flex items-center h-12">
+                          <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                             {project.name}
                           </h3>
                         </div>
-                        <div className="flex gap-2">
-                          <a
-                            href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 text-gray-400 hover:text-purple-400 transition-colors duration-200"
-                          >
-                            <ExternalLink size={20} />
-                          </a>
-                          <button
-                            onClick={() => toggleOpen(project.id)}
-                            className="p-2 text-gray-400 hover:text-purple-400 transition-colors duration-200"
-                          >
-                            {openStates[project.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                          </button>
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-base sm:text-lg leading-relaxed">{project.description}</p>
-                      {openStates[project.id] && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
-                          className="mt-4 sm:mt-6 will-change-transform relative rounded-lg overflow-hidden"
+                        <button
+                          onClick={() => toggleProject(project.id)}
+                          className="p-2 text-gray-400 hover:text-purple-400 transition-colors rounded-lg hover:bg-purple-500/10"
                         >
-                          <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30"></div>
-                          <iframe 
-                            src={project.url} 
-                            className="relative w-full h-64 sm:h-96 rounded-lg border border-purple-500/20"
-                            title={project.name}
-                            loading="lazy"
-                          />
+                          {expandedProjects[project.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                        </button>
+                      </div>
+
+                      {/* Popis projektu */}
+                      <p className="text-gray-300 text-base leading-relaxed">
+                        {project.description}
+                      </p>
+
+                      {/* Rozbalitelný obsah */}
+                      <motion.div
+                        initial={false}
+                        animate={{ 
+                          height: expandedProjects[project.id] ? 'auto' : 0,
+                          opacity: expandedProjects[project.id] ? 1 : 0,
+                          marginBottom: expandedProjects[project.id] ? 16 : 0
+                        }}
+                        transition={{ 
+                          duration: 0.3,
+                          ease: "easeInOut"
+                        }}
+                        className="overflow-hidden"
+                      >
+                        <motion.div
+                          initial={false}
+                          animate={{ 
+                            y: expandedProjects[project.id] ? 0 : -20,
+                            opacity: expandedProjects[project.id] ? 1 : 0
+                          }}
+                          transition={{ 
+                            duration: 0.3,
+                            ease: "easeInOut"
+                          }}
+                        >
+                          <div className="space-y-4">
+                            {/* Obrázek projektu */}
+                            <div className="relative w-full h-[300px] rounded-lg overflow-hidden">
+                              <Image
+                                src={project.image}
+                                alt={project.name}
+                                fill
+                                className="object-cover rounded-lg"
+                                priority={project.id === 1}
+                                quality={90}
+                              />
+                            </div>
+                          </div>
                         </motion.div>
-                      )}
+                      </motion.div>
+
+                      {/* Tlačítko - vždy na spodku karty */}
+                      <div className="mt-auto pt-4">
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium 
+                            hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-purple-500/25
+                            active:scale-95 transform"
+                        >
+                          Přejít do Projektu
+                          <ExternalLink className="ml-2" size={18} />
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
