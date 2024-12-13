@@ -25,7 +25,7 @@ export function AboutMePopup() {
             </div>
             <div>
               <h3 className="text-base font-semibold text-white mb-1">Vývojář</h3>
-              <p className="text-sm text-gray-300">Specializuji se na vývoj moderních webových a mobilních aplikací s využitím nejnovějších technologií.</p>
+              <p className="text-sm text-gray-300">Specializuji se na vývoj moderních webových aplikací s využitím nejnovějších technologií.</p>
             </div>
           </div>
 
