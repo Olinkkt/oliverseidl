@@ -72,7 +72,7 @@ export default function Home() {
                 </div>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-0">
-                Moje Portfolio
+              Portfolio | Oliver Seidl
               </h1>
             </div>
 
