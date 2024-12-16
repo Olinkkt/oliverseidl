@@ -55,7 +55,7 @@ const frontendTechnologies = [
 const backendTechnologies = [
   { name: 'Node.js', icon: '🟢' },
   { name: 'Git', icon: '📂' },
-  { name: 'MongoDB', icon: '🍃' },
+  { name: 'PostgreSQL', icon: '🍃' },
   { name: 'Python', icon: '🐍' },
 ]
 
