@@ -131,7 +131,7 @@ export default function Home() {
                       </div>
 
                       {/* Popis projektu - fixní výška */}
-                      <div className="h-[100px] overflow-auto mb-4">
+                      <div className="h-[100px] overflow-auto mb-4 project-description">
                         <p className="text-gray-300 text-base leading-relaxed">
                           {project.description}
                         </p>

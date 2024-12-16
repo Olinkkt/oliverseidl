@@ -54,3 +54,21 @@ body {
     @apply hover:shadow-purple-500/10;
   }
 }
+
+/* Vlastní scrollbar styly */
+.project-description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.project-description::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.project-description::-webkit-scrollbar-thumb {
+  background: rgb(168 85 247 / 0.3); /* lehce průhledná fialová */
+  border-radius: 3px;
+}
+
+.project-description::-webkit-scrollbar-thumb:hover {
+  background: rgb(168 85 247 / 0.5);
+}
