@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Code, Sparkles } from 'lucide-react'
+import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Code, Sparkles, Globe2 } from 'lucide-react'
 import { FaGithub, FaXTwitter, FaDiscord } from 'react-icons/fa6'
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
@@ -61,17 +61,62 @@ const backendTechnologies = [
 
 const courses = [
   { 
+    name: 'Techdays',
+    issuer: 'SSPŠ',
+    date: '2024',
+    description: 'Jednodenní technologický workshop kombinující programování mikrokontrolérů Raspberry Pi s tvorbou interaktivních projektů a základy vývoje webových aplikací s využitím moderních technologií.'
+  },
+  { 
     name: 'AI Mastery',
     issuer: 'SSPŠ',
     date: '2024',
-    description: 'Kurz zaměřený na nauku efektivního programování s AI nástroji při programování a vývoji'
+    description: '4 týdenní kurz zaměřený na efektivní využití umělé inteligence v programování. Zahrnoval práci s různými AI nástroji jako V0.dev, Perplexity.ai, Cursor Composer a dalšími a jejich praktické využití při vývoji aplikací. Součástí byla i výuka prompt engineeringu a best practices pro práci s AI.'
   },
   { 
-    name: 'TechDays',
-    issuer: 'SSPŠ',
-    date: '2024',
-    description: 'Kurz zaměřený na seznámení se světem IT: Programování mikrokontrolérů a úvod do vývoje webových stránek'
+    name: 'Výjezd do Anglie',
+    issuer: 'ZŠVV',
+    date: '2023',
+    description: 'Týdenní jazykový pobyt v Anglii zahrnující ubytování u místních rodin, intenzivní konverzaci v angličtině a poznávání britské kultury. Program obsahoval návštěvy významných míst a praktické využití angličtiny v každodenních situacích.'
   },
+  { 
+    name: 'English camp',
+    issuer: 'ZŠVV',
+    date: '2021 - 2024',
+    description: '4 denní intenzivní jazykový program v malebném prostředí Malé Skály, kombinující aktivní výuku angličtiny s interaktivními workshopy a outdoorovými aktivitami vedenými v anglickém jazyce. Absolvováno celkem 6× (2021, 2×2022, 2×2023, 2024), což významně přispělo k rozvoji mých jazykových dovedností.'
+  }
+]
+
+// Upravit jazykové dovednosti s SVG vlajkami
+const languageSkills = [
+  { 
+    name: 'Angličtina', 
+    icon: <svg className="w-5 h-5" viewBox="0 0 640 480">
+      <path fill="#012169" d="M0 0h640v480H0z"/>
+      <path fill="#FFF" d="m75 0 244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+      <path fill="#C8102E" d="m424 281 216 159v40L369 281h55zm-184 20 6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+      <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+      <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+    </svg>, 
+    level: 'C1 (SCIO)' 
+  },
+  { 
+    name: 'Čeština', 
+    icon: <svg className="w-5 h-5" viewBox="0 0 640 480">
+      <path fill="#fff" d="M0 0h640v240H0z"/>
+      <path fill="#d7141a" d="M0 240h640v240H0z"/>
+      <path fill="#11457e" d="M360 240 0 0v480z"/>
+    </svg>, 
+    level: 'Rodilý mluvčí' 
+  },
+  { 
+    name: 'Němčina', 
+    icon: <svg className="w-5 h-5" viewBox="0 0 640 480">
+      <path fill="#ffce00" d="M0 320h640v160H0z"/>
+      <path d="M0 0h640v160H0z"/>
+      <path fill="#d00" d="M0 160h640v160H0z"/>
+    </svg>, 
+    level: 'A1' 
+  }
 ]
 
 export default function Home() {
@@ -285,6 +330,34 @@ export default function Home() {
                   ))}
                 </div>
               </div>
+
+              {/* Přidat jazykové dovednosti */}
+              <div className="space-y-4 md:col-span-2">
+                <h3 className="text-lg font-semibold text-purple-400">Jazykové Dovednosti</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {languageSkills.map((lang, index) => (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.05 }}
+                      key={lang.name}
+                      className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                    >
+                      <div className="flex items-center gap-2">
+                        {typeof lang.icon === 'string' ? (
+                          <span className="text-xs px-1.5 py-0.5 bg-gray-700 rounded text-gray-300">{lang.icon}</span>
+                        ) : (
+                          lang.icon
+                        )}
+                        <span className="text-gray-300 text-sm">{lang.name}</span>
+                      </div>
+                      <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                        {lang.level}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -309,7 +382,7 @@ export default function Home() {
                 </div>
               </div>
               <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                Kurzy
+                Kurzy & Výjezdy
               </h2>
             </div>
 
