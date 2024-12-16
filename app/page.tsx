@@ -1,13 +1,11 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Code, Sparkles } from 'lucide-react'
 import { FaGithub, FaXTwitter, FaDiscord } from 'react-icons/fa6'
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
-import { fadeInUp } from './animations'
 import Image from 'next/image'
 
 const projects = [
@@ -75,12 +73,6 @@ const courses = [
     description: 'Kurz zaměřený na seznámení se světem IT: Programování mikrokontrolérů a úvod do vývoje webových stránek'
   },
 ]
-
-const containerVariants = {
-  initial: { opacity: 0, y: 10 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.2 }
-}
 
 export default function Home() {
   const [expandedProjects, setExpandedProjects] = useState<{ [key: number]: boolean }>({})
