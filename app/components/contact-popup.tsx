@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Modal } from './ui/modal'
 import { Mail } from 'lucide-react'
-import { FaDiscord, FaInstagram, FaGithub, FaXTwitter, FaFacebook } from 'react-icons/fa6'
+import { FaInstagram, FaGithub, FaXTwitter, FaFacebook } from 'react-icons/fa6'
 
 export function ContactPopup() {
   const [isOpen, setIsOpen] = useState(false)
@@ -14,12 +14,6 @@ export function ContactPopup() {
       value: 'seidl.oliver@icloud.com',
       icon: <Mail className="w-5 h-5" />,
       link: 'mailto:seidl.oliver@icloud.com'
-    },
-    { 
-      type: 'Discord',
-      value: 'omegha_yt',
-      icon: <FaDiscord className="w-5 h-5" />,
-      link: 'https://discord.com/users/omegha_yt'
     },
     { 
       type: 'Instagram',

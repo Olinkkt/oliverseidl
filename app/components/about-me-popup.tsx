@@ -11,7 +11,7 @@ export function AboutMePopup() {
     <>
       <a 
         onClick={() => setIsOpen(true)}
-        className="flex items-center px-4 py-2 rounded-lg hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300 cursor-pointer"
+        className="flex items-center whitespace-nowrap px-4 py-2 rounded-lg hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300 cursor-pointer"
       >
         <User className="mr-2" size={18} />
         O mně
