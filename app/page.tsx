@@ -128,32 +128,27 @@ export default function Home() {
   return (
     <div className="relative min-h-screen flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 bg-gray-900/90 shadow-lg text-white py-2 sm:py-4 border-b border-gray-800/50 z-50">
+      <header className="sticky top-0 bg-gray-900/90 shadow-lg text-white py-3 sm:py-4 border-b border-gray-800/50 z-50">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-0 sm:justify-between">
             {/* Logo a název */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="w-9 sm:w-12 h-9 sm:h-12 relative group">
+            <div className="flex items-center gap-3 group">
+              <div className="w-10 sm:w-12 h-10 sm:h-12 relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
                 <div className="relative h-full w-full p-2 sm:p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
-                  <div className="w-5 sm:w-7 h-5 sm:h-7">
+                  <div className="w-6 sm:w-8 h-6 sm:h-8">
                     <Briefcase className="w-full h-full text-purple-400" />
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                <h1 className="hidden sm:block text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 leading-tight">
-                  Portfolio
-                </h1>
-                <span className="text-base sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 leading-tight">
-                  Oliver Seidl
-                </span>
-              </div>
+              <h1 className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-0">
+              Portfolio | Oliver Seidl
+              </h1>
             </div>
 
             {/* Navigace */}
-            <nav>
-              <ul className="flex items-center gap-2 sm:gap-4">
+            <nav className="w-full sm:w-auto">
+              <ul className="flex justify-center sm:justify-end space-x-4 sm:space-x-6">
                 <li>
                   <AboutMePopup />
                 </li>
@@ -168,25 +163,14 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex-grow container mx-auto px-4 pt-16 pb-24">
-        <div className="text-center mb-16">
-          <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400"
-          >
-            Vítejte v mém portfoliu
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto"
-          >
-            Jsem student a nadšený vývojář webových aplikací. Specializuji se na moderní technologie 
-            a snažím se vytvářet uživatelsky přívětivá rozhraní.
-          </motion.p>
-        </div>
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="text-3xl sm:text-4xl md:text-6xl font-bold text-center mb-16 pb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400"
+        >
+          Vítejte v mém portfoliu
+        </motion.h1>
 
         {/* Project Section */}
         <div className="mb-16">
