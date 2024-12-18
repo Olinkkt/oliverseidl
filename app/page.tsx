@@ -248,7 +248,7 @@ export default function Home() {
             variants={fadeInLeft}
             className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8"
           >
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <motion.div
                 key={project.id}
                 variants={fadeIn}

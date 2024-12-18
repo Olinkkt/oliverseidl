@@ -3,6 +3,7 @@
 import { Modal } from './ui/modal'
 import { Download, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
+import Image from 'next/image'
 
 interface CertificateModalProps {
   isOpen: boolean;
@@ -44,10 +45,11 @@ export function CertificateModal({ isOpen, onClose, certificates, courseName }: 
             Certifikát ztracen!
           </div>
         ) : (
-          <img
+          <Image
             src={currentCertificate.thumbnail}
             alt={`Certifikát ${courseName}`}
-            className="w-full h-full object-contain"
+            fill
+            className="object-contain"
           />
         )}
 
