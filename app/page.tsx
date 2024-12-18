@@ -6,6 +6,7 @@ import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Code, Sparkles 
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
 import Image from 'next/image'
+import { MobileNav } from './components/mobile-nav'
 
 const projects = [
   {
@@ -130,25 +131,25 @@ export default function Home() {
       {/* Header */}
       <header className="sticky top-0 bg-gray-900/90 shadow-lg text-white py-3 sm:py-4 border-b border-gray-800/50 z-50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-0 sm:justify-between">
+          <div className="flex items-center justify-between h-12 sm:h-auto">
             {/* Logo a název */}
             <div className="flex items-center gap-3 group">
-              <div className="w-10 sm:w-12 h-10 sm:h-12 relative">
+              <div className="w-10 h-10 relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
-                <div className="relative h-full w-full p-2 sm:p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
-                  <div className="w-6 sm:w-8 h-6 sm:h-8">
+                <div className="relative h-full w-full p-2 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
+                  <div className="w-6 h-6">
                     <Briefcase className="w-full h-full text-purple-400" />
                   </div>
                 </div>
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-0">
-              Portfolio | Oliver Seidl
+              <h1 className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-0">
+                Portfolio | Oliver Seidl
               </h1>
             </div>
 
             {/* Navigace */}
-            <nav className="w-full sm:w-auto">
-              <ul className="flex justify-center sm:justify-end space-x-4 sm:space-x-6">
+            <nav>
+              <ul className="hidden sm:flex justify-end space-x-6">
                 <li>
                   <AboutMePopup />
                 </li>
@@ -156,6 +157,9 @@ export default function Home() {
                   <ContactPopup />
                 </li>
               </ul>
+              <div className="flex sm:hidden items-center">
+                <MobileNav />
+              </div>
             </nav>
           </div>
         </div>
