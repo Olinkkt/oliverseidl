@@ -8,6 +8,7 @@ import { ContactPopup } from './components/contact-popup'
 import Image from 'next/image'
 import { MobileNav } from './components/mobile-nav'
 import { CertificateModal } from './components/certificate-modal'
+import { fadeIn, fadeInLeft, staggerContainer } from './animations/fade'
 
 // Přidáme interface pro certifikát
 interface Certificate {
@@ -223,35 +224,37 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex-grow container mx-auto px-4 pt-8 sm:pt-12 pb-24">
-        <div className="text-center mb-8 sm:mb-12">
-          <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 py-[0.1em]"
+        <motion.div
+          variants={staggerContainer}
+          initial="initial"
+          animate="animate"
+          className="space-y-16"
+        >
+          {/* Hero sekce */}
+          <motion.div 
+            variants={fadeIn}
+            className="text-center mb-8 sm:mb-12"
           >
-            Vítejte v mém portfoliu
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="text-lg sm:text-xl text-gray-400"
-          >
-            Nadšenec do programování a moderních technologií
-          </motion.p>
-        </div>
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 py-[0.1em]">
+              Vítejte v mém portfoliu
+            </h1>
+            <p className="text-lg sm:text-xl text-gray-400">
+              Nadšenec do programování a moderních technologií
+            </p>
+          </motion.div>
 
-        {/* Project Section */}
-        <div className="mb-16">
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
+          {/* Projekty */}
+          <motion.section 
+            variants={fadeInLeft}
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8"
+          >
             {projects.map((project, index) => (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                key={project.id} 
+              <motion.div
+                key={project.id}
+                variants={fadeIn}
                 className="group relative h-full"
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.2 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
                 
@@ -334,99 +337,162 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
-          </section>
-        </div>
+          </motion.section>
 
-        {/* Skills & Technologies Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-          className="my-8 sm:my-16 group relative"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-          
-          <div className="relative bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors p-4 sm:p-8">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
-                <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
-                  <div className="w-8 h-8">
-                    <Code className="w-full h-full text-purple-400" />
+          {/* Skills sekce */}
+          <motion.div
+            variants={fadeIn}
+            className="my-8 sm:my-16 group relative"
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            viewport={{ once: true }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            
+            <div className="relative bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors p-4 sm:p-8">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+                  <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
+                    <div className="w-8 h-8">
+                      <Code className="w-full h-full text-purple-400" />
+                    </div>
+                  </div>
+                </div>
+                <h2 id="tech_skills" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                  Technologie & Dovednosti
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Frontend */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-purple-400">Frontend Technologie</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {frontendTechnologies.map((tech, index) => (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2, delay: index * 0.05 }}
+                        key={tech.name}
+                        className="flex items-center gap-2 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                      >
+                        <span className="text-xl">{tech.icon}</span>
+                        <span className="text-gray-300 text-sm">{tech.name}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Backend & Tools */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-purple-400">Backend & Nástroje</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {backendTechnologies.map((tech, index) => (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2, delay: index * 0.05 }}
+                        key={tech.name}
+                        className="flex items-center gap-2 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                      >
+                        <span className="text-xl">{tech.icon}</span>
+                        <span className="text-gray-300 text-sm">{tech.name}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Přidat jazykové dovednosti */}
+                <div className="space-y-4 md:col-span-2">
+                  <h3 className="text-lg font-semibold text-purple-400">Jazykové Dovednosti</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    {languageSkills.map((lang, index) => (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2, delay: index * 0.05 }}
+                        key={lang.name}
+                        className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                      >
+                        <div className="flex items-center gap-2">
+                          {typeof lang.icon === 'string' ? (
+                            <span className="text-xs px-1.5 py-0.5 bg-gray-700 rounded text-gray-300">{lang.icon}</span>
+                          ) : (
+                            lang.icon
+                          )}
+                          <span className="text-gray-300 text-sm">{lang.name}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-400 text-sm">{lang.level}</span>
+                          {lang.certificate && (
+                            <button
+                              onClick={() => setSelectedCertificate({
+                                courseName: `${lang.name} - ${lang.level}`,
+                                certificates: [lang.certificate as Certificate]
+                              })}
+                              className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
+                              title="Zobrazit certifikát"
+                            >
+                              <Award size={16} />
+                            </button>
+                          )}
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               </div>
-              <h2 id="tech_skills" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                Technologie & Dovednosti
-              </h2>
             </div>
+          </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Frontend */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-purple-400">Frontend Technologie</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {frontendTechnologies.map((tech, index) => (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
-                      key={tech.name}
-                      className="flex items-center gap-2 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
-                    >
-                      <span className="text-xl">{tech.icon}</span>
-                      <span className="text-gray-300 text-sm">{tech.name}</span>
-                    </motion.div>
-                  ))}
+          {/* Certifikáty & Kurzy Section */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.4 }}
+            className="my-8 sm:my-16 group relative"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+            
+            <div className="relative bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors p-4 sm:p-8">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+                  <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
+                    <div className="w-8 h-8">
+                      <Sparkles className="w-full h-full text-purple-400" />
+                    </div>
+                  </div>
                 </div>
+                <h2 id="courses_excursions" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                  Kurzy & Výjezdy
+                </h2>
               </div>
 
-              {/* Backend & Tools */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-purple-400">Backend & Nástroje</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {backendTechnologies.map((tech, index) => (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
-                      key={tech.name}
-                      className="flex items-center gap-2 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
-                    >
-                      <span className="text-xl">{tech.icon}</span>
-                      <span className="text-gray-300 text-sm">{tech.name}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Přidat jazykové dovednosti */}
-              <div className="space-y-4 md:col-span-2">
-                <h3 className="text-lg font-semibold text-purple-400">Jazykové Dovednosti</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                  {languageSkills.map((lang, index) => (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
-                      key={lang.name}
-                      className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
-                    >
+              <div className="space-y-3">
+                {courses.map((course, index) => (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, delay: index * 0.1 }}
+                    key={course.name}
+                    className="p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-all duration-300 group"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                        {course.name}
+                      </h4>
                       <div className="flex items-center gap-2">
-                        {typeof lang.icon === 'string' ? (
-                          <span className="text-xs px-1.5 py-0.5 bg-gray-700 rounded text-gray-300">{lang.icon}</span>
-                        ) : (
-                          lang.icon
-                        )}
-                        <span className="text-gray-300 text-sm">{lang.name}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400 text-sm">{lang.level}</span>
-                        {lang.certificate && (
+                        <span className="text-gray-400 text-sm">{course.issuer}</span>
+                        <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                          {course.date}
+                        </span>
+                        {course.certificate && (
                           <button
                             onClick={() => setSelectedCertificate({
-                              courseName: `${lang.name} - ${lang.level}`,
-                              certificates: [lang.certificate as Certificate]
+                              courseName: course.name,
+                              certificates: Array.isArray(course.certificate) ? course.certificate : course.certificate ? [course.certificate] : []
                             })}
                             className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
                             title="Zobrazit certifikát"
@@ -435,88 +501,26 @@ export default function Home() {
                           </button>
                         )}
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Certifikáty & Kurzy Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-          className="my-8 sm:my-16 group relative"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-          
-          <div className="relative bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors p-4 sm:p-8">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
-                <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
-                  <div className="w-8 h-8">
-                    <Sparkles className="w-full h-full text-purple-400" />
-                  </div>
-                </div>
-              </div>
-              <h2 id="courses_excursions" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                Kurzy & Výjezdy
-              </h2>
-            </div>
-
-            <div className="space-y-3">
-              {courses.map((course, index) => (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2, delay: index * 0.1 }}
-                  key={course.name}
-                  className="p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-all duration-300 group"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                      {course.name}
-                    </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-400 text-sm">{course.issuer}</span>
-                      <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                        {course.date}
-                      </span>
-                      {course.certificate && (
-                        <button
-                          onClick={() => setSelectedCertificate({
-                            courseName: course.name,
-                            certificates: Array.isArray(course.certificate) ? course.certificate : course.certificate ? [course.certificate] : []
-                          })}
-                          className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
-                          title="Zobrazit certifikát"
-                        >
-                          <Award size={16} />
-                        </button>
-                      )}
                     </div>
-                  </div>
-                  <p className="text-gray-300 text-sm">
-                    {course.description}
-                  </p>
-                </motion.div>
-              ))}
+                    <p className="text-gray-300 text-sm">
+                      {course.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Modal pro certifikát */}
-        {selectedCertificate && (
-          <CertificateModal
-            isOpen={!!selectedCertificate}
-            onClose={() => setSelectedCertificate(null)}
-            certificates={selectedCertificate.certificates}
-            courseName={selectedCertificate.courseName}
-          />
-        )}
+          {/* Modal pro certifikát */}
+          {selectedCertificate && (
+            <CertificateModal
+              isOpen={!!selectedCertificate}
+              onClose={() => setSelectedCertificate(null)}
+              certificates={selectedCertificate.certificates}
+              courseName={selectedCertificate.courseName}
+            />
+          )}
+        </motion.div>
       </main>
 
       {/* Footer */}

@@ -2,15 +2,44 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
+import { ScrollToTop } from './components/scroll-to-top'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Portfolio | Oliver Seidl',
-  description: 'Portfolio projektů a informace o mně',
+  title: 'Oliver Seidl | Fullstack Developer',
+  description: 'Fullstack vývojář specializující se na React, Next.js, Node.js a Python. Portfolio projektů a profesních zkušeností.',
+  keywords: [
+    'fullstack developer', 
+    'react', 
+    'next.js', 
+    'typescript',
+    'python',
+    'node.js',
+    'postgresql',
+    'web development',
+    'portfolio',
+    'oliver seidl',
+    'seidltech'
+  ],
+  authors: [{ name: 'Oliver Seidl' }],
+  creator: 'Oliver Seidl',
+  publisher: 'Oliver Seidl',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
-    title: 'Portfolio | Oliver Seidl',
-    description: 'Portfolio projektů a informace o mně',
+    type: 'website',
+    locale: 'cs_CZ',
+    url: 'https://seidltech.eu/',
+    siteName: 'SeidlTech',
+    title: 'Oliver Seidl | Fullstack Developer Portfolio',
+    description: 'Fullstack vývojář specializující se na React, Next.js, Node.js a Python. Portfolio projektů a profesních zkušeností.',
     images: [
       {
         url: '/images/portfolio-preview.png',
@@ -19,7 +48,22 @@ export const metadata: Metadata = {
         alt: 'Portfolio Preview'
       }
     ],
-    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Oliver Seidl | Fullstack Developer',
+    description: 'Fullstack vývojář specializující se na React, Next.js, Node.js a Python. Portfolio projektů a profesních zkušeností.',
+    images: ['/images/portfolio-preview.png'],
+    creator: '@olinkkt'
+  },
+  verification: {
+    google: 'google-site-verification-code', // Přidat až budete mít kód z Google Search Console
+  },
+  alternates: {
+    canonical: 'https://seidltech.eu/',
+    languages: {
+      'cs': 'https://oliver-seidl.vercel.app/'
+    }
   }
 }
 
@@ -30,8 +74,41 @@ export default function RootLayout({
 }) {
   return (
     <html lang="cs">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+        {/* Strukturovaná data pro Google */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Oliver Seidl",
+              url: "https://seidltech.eu/",
+              jobTitle: "Fullstack Developer",
+              knowsAbout: [
+                "Web Development",
+                "React",
+                "Next.js",
+                "TypeScript",
+                "Python",
+                "Node.js",
+                "PostgreSQL"
+              ],
+              sameAs: [
+                "https://github.com/Olinkkt",
+                "https://instagram.com/olinkkt",
+                "https://x.com/olinkkt",
+                "https://oliver-seidl.vercel.app/"
+              ]
+            })
+          }}
+        />
+      </head>
       <body className={inter.className}>
         {children}
+        <ScrollToTop />
         <Toaster position="bottom-right" />
       </body>
     </html>

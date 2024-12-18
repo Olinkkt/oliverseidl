@@ -1,0 +1,11 @@
+# https://seidltech.eu/robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://seidltech.eu/sitemap.xml
+
+# Disallow
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/ 
