@@ -72,3 +72,11 @@ body {
 .project-description::-webkit-scrollbar-thumb:hover {
   background: rgb(168 85 247 / 0.5);
 }
+
+#tech_skills {
+  margin-bottom: 0rem;
+}
+
+#courses_excursions {
+  margin-bottom: 0rem;
+}

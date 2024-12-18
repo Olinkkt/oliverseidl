@@ -2,11 +2,26 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Code, Sparkles } from 'lucide-react'
+import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Code, Sparkles, Award } from 'lucide-react'
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
 import Image from 'next/image'
 import { MobileNav } from './components/mobile-nav'
+import { CertificateModal } from './components/certificate-modal'
+
+// Přidáme interface pro certifikát
+interface Certificate {
+  thumbnail: string;
+  url?: string;
+}
+
+interface Course {
+  name: string;
+  issuer: string;
+  date: string;
+  description: string;
+  certificate?: Certificate | Certificate[];
+}
 
 const projects = [
   {
@@ -59,18 +74,24 @@ const backendTechnologies = [
   { name: 'Python', icon: '🐍' },
 ]
 
-const courses = [
+const courses: Course[] = [
   { 
     name: 'Techdays',
     issuer: 'SSPŠ',
     date: '2024',
-    description: 'Jednodenní technologický workshop kombinující programování mikrokontrolérů Raspberry Pi s tvorbou interaktivních projektů a základy vývoje webových aplikací s využitím moderních technologií.'
+    description: 'Jednodenní technologický workshop kombinující programování mikrokontrolérů Raspberry Pi s tvorbou interaktivních projektů a základy vývoje webových aplikací s využitím moderních technologií.',
+    certificate: {
+      thumbnail: '/certificates/techdays-thumb.png'
+    }
   },
   { 
     name: 'AI Mastery',
     issuer: 'SSPŠ',
     date: '2024',
-    description: '4 týdenní kurz zaměřený na efektivní využití umělé inteligence v programování. Zahrnoval práci s různými AI nástroji jako V0.dev, Perplexity.ai, Cursor Composer a dalšími a jejich praktické využití při vývoji aplikací. Součástí byla i výuka prompt engineeringu a best practices pro práci s AI.'
+    description: '4 týdenní kurz zaměřený na efektivní využití umělé inteligence v programování. Zahrnoval práci s různými AI nástroji jako V0.dev, Perplexity.ai, Cursor Composer a dalšími a jejich praktické využití při vývoji aplikací. Součástí byla i výuka prompt engineeringu a best practices pro práci s AI.',
+    certificate: {
+      thumbnail: '/certificates/ai-mastery-thumb.png'
+    }
   },
   { 
     name: 'Výjezd do Anglie',
@@ -82,12 +103,39 @@ const courses = [
     name: 'English camp',
     issuer: 'ZŠVV',
     date: '2021 - 2024',
-    description: '4 denní intenzivní jazykový program v malebném prostředí Malé Skály, kombinující aktivní výuku angličtiny s interaktivními workshopy a outdoorovými aktivitami vedenými v anglickém jazyce. Absolvováno celkem 6× (2021, 2×2022, 2×2023, 2024), což významně přispělo k rozvoji mých jazykových dovedností.'
+    description: '4 denní intenzivní jazykový program v malebném prostředí Malé Skály, kombinující aktivní výuku angličtiny s interaktivními workshopy a outdoorovými aktivitami vedenými v anglickém jazyce. Absolvováno celkem 6× (2021, 2×2022, 2×2023, 2024), což významně přispělo k rozvoji mých jazykových dovedností.',
+    certificate: [
+      {
+        thumbnail: '/images/thumbnails/english_camp_certificate_01.png'
+      },
+      {
+        thumbnail: '/images/thumbnails/english_camp_certificate_02.png'
+      },
+      {
+        thumbnail: 'missing'
+      },
+      {
+        thumbnail: '/images/thumbnails/english_camp_certificate_04.png'
+      },
+      {
+        thumbnail: '/images/thumbnails/english_camp_certificate_05.png'
+      },
+      {
+        thumbnail: '/images/thumbnails/english_camp_certificate_06.png'
+      }
+    ]
   }
 ]
 
 // Upravit jazykové dovednosti s SVG vlajkami
-const languageSkills = [
+interface LanguageSkill {
+  name: string;
+  icon: JSX.Element;
+  level: string;
+  certificate?: Certificate;
+}
+
+const languageSkills: LanguageSkill[] = [
   { 
     name: 'Angličtina', 
     icon: <svg className="w-5 h-5" viewBox="0 0 640 480">
@@ -97,7 +145,11 @@ const languageSkills = [
       <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
       <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
     </svg>, 
-    level: 'C1 (SCIO)' 
+    level: 'C1 (SCIO)',
+    certificate: {
+      url: '/certificates/scio_english_certificate_c1.pdf',
+      thumbnail: '/images/thumbnails/scio_english_certificate_c1.png'
+    }
   },
   { 
     name: 'Čeština', 
@@ -121,6 +173,10 @@ const languageSkills = [
 
 export default function Home() {
   const [expandedProjects, setExpandedProjects] = useState<{ [key: number]: boolean }>({})
+  const [selectedCertificate, setSelectedCertificate] = useState<{
+    courseName: string;
+    certificates: Certificate[];
+  } | null>(null);
 
   const toggleProject = (id: number) => {
     setExpandedProjects(prev => ({ ...prev, [id]: !prev[id] }))
@@ -143,7 +199,7 @@ export default function Home() {
                 </div>
               </div>
               <h1 className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-0">
-                Portfolio | Oliver Seidl
+                Oliver Seidl
               </h1>
             </div>
 
@@ -166,15 +222,25 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow container mx-auto px-4 pt-16 pb-24">
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-          className="text-3xl sm:text-4xl md:text-6xl font-bold text-center mb-16 pb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400"
-        >
-          Vítejte v mém portfoliu
-        </motion.h1>
+      <main className="flex-grow container mx-auto px-4 pt-8 sm:pt-12 pb-24">
+        <div className="text-center mb-8 sm:mb-12">
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 py-[0.1em]"
+          >
+            Vítejte v mém portfoliu
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="text-lg sm:text-xl text-gray-400"
+          >
+            Nadšenec do programování a moderních technologií
+          </motion.p>
+        </div>
 
         {/* Project Section */}
         <div className="mb-16">
@@ -290,7 +356,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+              <h2 id="tech_skills" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                 Technologie & Dovednosti
               </h2>
             </div>
@@ -354,9 +420,21 @@ export default function Home() {
                         )}
                         <span className="text-gray-300 text-sm">{lang.name}</span>
                       </div>
-                      <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                        {lang.level}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400 text-sm">{lang.level}</span>
+                        {lang.certificate && (
+                          <button
+                            onClick={() => setSelectedCertificate({
+                              courseName: `${lang.name} - ${lang.level}`,
+                              certificates: [lang.certificate as Certificate]
+                            })}
+                            className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
+                            title="Zobrazit certifikát"
+                          >
+                            <Award size={16} />
+                          </button>
+                        )}
+                      </div>
                     </motion.div>
                   ))}
                 </div>
@@ -384,7 +462,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+              <h2 id="courses_excursions" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                 Kurzy & Výjezdy
               </h2>
             </div>
@@ -407,6 +485,18 @@ export default function Home() {
                       <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
                         {course.date}
                       </span>
+                      {course.certificate && (
+                        <button
+                          onClick={() => setSelectedCertificate({
+                            courseName: course.name,
+                            certificates: Array.isArray(course.certificate) ? course.certificate : course.certificate ? [course.certificate] : []
+                          })}
+                          className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
+                          title="Zobrazit certifikát"
+                        >
+                          <Award size={16} />
+                        </button>
+                      )}
                     </div>
                   </div>
                   <p className="text-gray-300 text-sm">
@@ -417,6 +507,16 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
+
+        {/* Modal pro certifikát */}
+        {selectedCertificate && (
+          <CertificateModal
+            isOpen={!!selectedCertificate}
+            onClose={() => setSelectedCertificate(null)}
+            certificates={selectedCertificate.certificates}
+            courseName={selectedCertificate.courseName}
+          />
+        )}
       </main>
 
       {/* Footer */}

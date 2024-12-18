@@ -46,8 +46,12 @@ export function MobileNav() {
               </div>
               
               <nav className="space-y-4">
-                <AboutMePopup />
-                <ContactPopup />
+                <div className="mobile-nav-item">
+                  <AboutMePopup />
+                </div>
+                <div className="mobile-nav-item">
+                  <ContactPopup isMobile={true} />
+                </div>
               </nav>
             </motion.div>
           </>

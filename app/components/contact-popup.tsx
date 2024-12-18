@@ -5,7 +5,11 @@ import { Modal } from './ui/modal'
 import { Mail } from 'lucide-react'
 import { FaInstagram, FaGithub, FaXTwitter, FaFacebook } from 'react-icons/fa6'
 
-export function ContactPopup() {
+interface ContactPopupProps {
+  isMobile?: boolean
+}
+
+export function ContactPopup({ isMobile = false }: ContactPopupProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const contacts = [
@@ -45,7 +49,11 @@ export function ContactPopup() {
     <>
       <a 
         onClick={() => setIsOpen(true)}
-        className="flex items-center px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-purple-500/25 cursor-pointer"
+        className={`flex items-center px-4 py-2 rounded-lg ${
+          isMobile 
+            ? "hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300" 
+            : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
+        } cursor-pointer`}
       >
         <Mail className="mr-2" size={18} />
         Kontakt
