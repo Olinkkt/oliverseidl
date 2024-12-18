@@ -1,1 +1,0 @@
-// Přidat možnost přepínat mezi CZ/EN verzí 

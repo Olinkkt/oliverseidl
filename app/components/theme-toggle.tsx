@@ -1,1 +1,0 @@
-// Přepínač mezi tmavým a světlým režimem 
