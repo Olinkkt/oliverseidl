@@ -424,7 +424,9 @@ export default function Home() {
                           <span className="text-gray-300 text-sm">{lang.name}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-gray-400 text-sm">{lang.level}</span>
+                          <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                            {lang.level}
+                          </span>
                           {lang.certificate && (
                             <button
                               onClick={() => setSelectedCertificate({
