@@ -1,7 +1,6 @@
 'use client'
 
 import { Modal } from './ui/modal'
-import Image from 'next/image'
 import { Download, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 
