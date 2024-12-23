@@ -30,9 +30,6 @@ export function CertificateModal({ isOpen, onClose, certificates, courseName }: 
     prev === 0 ? prev : prev - 1
   );
 
-  console.log('Current certificate:', currentCertificate);
-  console.log('Certificates array:', certificates);
-
   return (
     <Modal 
       isOpen={isOpen} 
@@ -55,11 +52,12 @@ export function CertificateModal({ isOpen, onClose, certificates, courseName }: 
 
         {/* Navigační tlačítka */}
         {hasMultipleCertificates && (
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4">
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 z-[60]">
             <button
               onClick={prev}
               disabled={currentIndex === 0}
               className="p-2 rounded-full bg-gray-900/80 text-purple-400 hover:bg-purple-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Předchozí certifikát"
             >
               <ChevronLeft size={24} />
             </button>
@@ -67,6 +65,7 @@ export function CertificateModal({ isOpen, onClose, certificates, courseName }: 
               onClick={next}
               disabled={currentIndex === certificates.length - 1}
               className="p-2 rounded-full bg-gray-900/80 text-purple-400 hover:bg-purple-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Další certifikát"
             >
               <ChevronRight size={24} />
             </button>
@@ -78,7 +77,8 @@ export function CertificateModal({ isOpen, onClose, certificates, courseName }: 
             href={currentCertificate.url}
             target="_blank"
             rel="noopener noreferrer" 
-            className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2 bg-purple-500/90 rounded-lg hover:bg-purple-600/90 transition-colors"
+            className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2 bg-purple-500/90 rounded-lg hover:bg-purple-600/90 transition-colors z-[70]"
+            aria-label="Stáhnout certifikát"
           >
             <Download size={18} />
             Stáhnout PDF

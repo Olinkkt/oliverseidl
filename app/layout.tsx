@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { ScrollToTop } from './components/scroll-to-top'
+import { FloatingContact } from './components/floating-contact'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -109,7 +110,29 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
         <ScrollToTop />
-        <Toaster position="bottom-right" />
+        <FloatingContact />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: '#1f2937', // gray-800
+              color: '#e5e7eb', // gray-200
+              border: '1px solid rgba(75, 85, 99, 0.2)', // gray-600 s průhledností
+            },
+            success: {
+              iconTheme: {
+                primary: '#a855f7', // purple-500
+                secondary: '#1f2937', // gray-800
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#ef4444', // red-500
+                secondary: '#1f2937', // gray-800
+              },
+            },
+          }}
+        />
       </body>
     </html>
   )

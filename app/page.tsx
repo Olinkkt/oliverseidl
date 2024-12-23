@@ -24,6 +24,7 @@ import {
   SiPostgresql,
   SiPython
 } from 'react-icons/si'
+import { Tooltip } from './components/ui/tooltip'
 
 // Přidáme interface pro certifikát
 interface Certificate {
@@ -278,12 +279,15 @@ export default function Home() {
                           {project.name}
                         </h3>
                       </div>
-                      <button
-                        onClick={() => toggleProject(project.id)}
-                        className="p-2 text-gray-400 hover:text-purple-400 transition-colors rounded-lg hover:bg-purple-500/10"
-                      >
-                        {expandedProjects[project.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                      </button>
+                      <Tooltip text={`${expandedProjects[project.id] ? 'Sbalit' : 'Rozbalit'} detail projektu`}>
+                        <button
+                          onClick={() => toggleProject(project.id)}
+                          aria-label={`${expandedProjects[project.id] ? 'Sbalit' : 'Rozbalit'} detail projektu ${project.name}`}
+                          className="p-2 text-gray-400 hover:text-purple-400 transition-colors rounded-lg hover:bg-purple-500/10"
+                        >
+                          {expandedProjects[project.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                        </button>
+                      </Tooltip>
                     </div>
 
                     {/* Popis projektu - fixní výška */}
@@ -377,7 +381,7 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Frontend */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-purple-400">Frontend</h3>
+                  <h4 className="text-lg font-semibold text-purple-400">Frontend</h4>
                   <div className="grid grid-cols-2 gap-3">
                     {frontendTechnologies.map((tech, index) => (
                       <motion.div 
@@ -398,7 +402,7 @@ export default function Home() {
 
                 {/* Backend & Tools */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-purple-400">Backend & Nástroje</h3>
+                  <h4 className="text-lg font-semibold text-purple-400">Backend & Nástroje</h4>
                   <div className="grid grid-cols-2 gap-3">
                     {backendTechnologies.map((tech, index) => (
                       <motion.div 
@@ -419,7 +423,7 @@ export default function Home() {
 
                 {/* Přidat jazykové dovednosti */}
                 <div className="space-y-4 md:col-span-2">
-                  <h3 className="text-lg font-semibold text-purple-400">Jazykové Dovednosti</h3>
+                  <h4 className="text-lg font-semibold text-purple-400">Jazykové Dovednosti</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                     {languageSkills.map((lang, index) => (
                       <motion.div 
@@ -442,16 +446,18 @@ export default function Home() {
                             {lang.level}
                           </span>
                           {lang.certificate && (
-                            <button
-                              onClick={() => setSelectedCertificate({
-                                courseName: `${lang.name} - ${lang.level}`,
-                                certificates: [lang.certificate as Certificate]
-                              })}
-                              className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
-                              title="Zobrazit certifikát"
-                            >
-                              <Award size={16} />
-                            </button>
+                            <Tooltip text="Zobrazit certifikát">
+                              <button
+                                onClick={() => setSelectedCertificate({
+                                  courseName: `${lang.name} - ${lang.level}`,
+                                  certificates: [lang.certificate as Certificate]
+                                })}
+                                aria-label={`Zobrazit certifikát pro ${lang.name}`}
+                                className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
+                              >
+                                <Award size={16} />
+                              </button>
+                            </Tooltip>
                           )}
                         </div>
                       </motion.div>
@@ -505,16 +511,22 @@ export default function Home() {
                           {course.date}
                         </span>
                         {course.certificate && (
-                          <button
-                            onClick={() => setSelectedCertificate({
-                              courseName: course.name,
-                              certificates: Array.isArray(course.certificate) ? course.certificate : course.certificate ? [course.certificate] : []
-                            })}
-                            className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
-                            title="Zobrazit certifikát"
-                          >
-                            <Award size={16} />
-                          </button>
+                          <Tooltip text="Zobrazit certifikát">
+                            <button
+                              onClick={() => setSelectedCertificate({
+                                courseName: course.name,
+                                certificates: Array.isArray(course.certificate) 
+                                  ? course.certificate 
+                                  : course.certificate 
+                                  ? [course.certificate]
+                                  : []
+                              })}
+                              aria-label={`Zobrazit certifikát pro ${course.name}`}
+                              className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
+                            >
+                              <Award size={16} />
+                            </button>
+                          </Tooltip>
                         )}
                       </div>
                     </div>
