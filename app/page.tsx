@@ -9,6 +9,21 @@ import Image from 'next/image'
 import { MobileNav } from './components/mobile-nav'
 import { CertificateModal } from './components/certificate-modal'
 import { fadeIn, fadeInLeft, staggerContainer } from './animations/fade'
+import { 
+  SiHtml5, 
+  SiCss3, 
+  SiJavascript, 
+  SiReact, 
+  SiNextdotjs, 
+  SiBootstrap, 
+  SiTypescript, 
+  SiTailwindcss,
+  SiNodedotjs,
+  SiGit,
+  SiGithub,
+  SiPostgresql,
+  SiPython
+} from 'react-icons/si'
 
 // Přidáme interface pro certifikát
 interface Certificate {
@@ -58,21 +73,22 @@ const projects = [
 ]
 
 const frontendTechnologies = [
-  { name: 'HTML', icon: '🌐' },
-  { name: 'CSS', icon: '🎨' },
-  { name: 'JavaScript', icon: '💛' },
-  { name: 'React', icon: '⚛️' },
-  { name: 'Next.js', icon: '▲' },
-  { name: 'Bootstrap 5', icon: '🅱️' },
-  { name: 'TypeScript', icon: '📘' },
-  { name: 'Tailwind CSS', icon: '💨' },
+  { name: 'HTML', icon: <SiHtml5 className="w-5 h-5 text-[#E34F26]" /> },
+  { name: 'CSS', icon: <SiCss3 className="w-5 h-5 text-[#1572B6]" /> },
+  { name: 'JavaScript', icon: <SiJavascript className="w-5 h-5 text-[#F7DF1E]" /> },
+  { name: 'React', icon: <SiReact className="w-5 h-5 text-[#61DAFB]" /> },
+  { name: 'Next.js', icon: <SiNextdotjs className="w-5 h-5 text-white" /> },
+  { name: 'Bootstrap 5', icon: <SiBootstrap className="w-5 h-5 text-[#7952B3]" /> },
+  { name: 'TypeScript', icon: <SiTypescript className="w-5 h-5 text-[#3178C6]" /> },
+  { name: 'Tailwind CSS', icon: <SiTailwindcss className="w-5 h-5 text-[#06B6D4]" /> },
 ]
 
 const backendTechnologies = [
-  { name: 'Node.js', icon: '🟢' },
-  { name: 'Git', icon: '📂' },
-  { name: 'PostgreSQL', icon: '🍃' },
-  { name: 'Python', icon: '🐍' },
+  { name: 'Node.js', icon: <SiNodedotjs className="w-5 h-5 text-[#339933]" /> },
+  { name: 'Git', icon: <SiGit className="w-5 h-5 text-[#F05032]" /> },
+  { name: 'GitHub', icon: <SiGithub className="w-5 h-5 text-white" /> },
+  { name: 'PostgreSQL', icon: <SiPostgresql className="w-5 h-5 text-[#4169E1]" /> },
+  { name: 'Python', icon: <SiPython className="w-5 h-5 text-[#3776AB]" /> },
 ]
 
 const courses: Course[] = [
@@ -81,18 +97,12 @@ const courses: Course[] = [
     issuer: 'SSPŠ',
     date: '2024',
     description: 'Jednodenní technologický workshop kombinující programování mikrokontrolérů Raspberry Pi s tvorbou interaktivních projektů a základy vývoje webových aplikací s využitím moderních technologií.',
-    certificate: {
-      thumbnail: '/certificates/techdays-thumb.png'
-    }
   },
   { 
     name: 'AI Mastery',
     issuer: 'SSPŠ',
     date: '2024',
     description: '4 týdenní kurz zaměřený na efektivní využití umělé inteligence v programování. Zahrnoval práci s různými AI nástroji jako V0.dev, Perplexity.ai, Cursor Composer a dalšími a jejich praktické využití při vývoji aplikací. Součástí byla i výuka prompt engineeringu a best practices pro práci s AI.',
-    certificate: {
-      thumbnail: '/certificates/ai-mastery-thumb.png'
-    }
   },
   { 
     name: 'Výjezd do Anglie',
@@ -367,7 +377,7 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Frontend */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-purple-400">Frontend Technologie</h3>
+                  <h3 className="text-lg font-semibold text-purple-400">Frontend</h3>
                   <div className="grid grid-cols-2 gap-3">
                     {frontendTechnologies.map((tech, index) => (
                       <motion.div 
@@ -375,9 +385,11 @@ export default function Home() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.2, delay: index * 0.05 }}
                         key={tech.name}
-                        className="flex items-center gap-2 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                        className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
                       >
-                        <span className="text-xl">{tech.icon}</span>
+                        <div className="flex-shrink-0">
+                          {tech.icon}
+                        </div>
                         <span className="text-gray-300 text-sm">{tech.name}</span>
                       </motion.div>
                     ))}
@@ -394,9 +406,11 @@ export default function Home() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.2, delay: index * 0.05 }}
                         key={tech.name}
-                        className="flex items-center gap-2 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                        className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
                       >
-                        <span className="text-xl">{tech.icon}</span>
+                        <div className="flex-shrink-0">
+                          {tech.icon}
+                        </div>
                         <span className="text-gray-300 text-sm">{tech.name}</span>
                       </motion.div>
                     ))}
