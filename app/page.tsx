@@ -1,30 +1,25 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { Briefcase, ChevronDown, ChevronUp, Globe, ExternalLink, Code, Sparkles, Award } from 'lucide-react'
 import { AboutMePopup } from './components/about-me-popup'
 import { ContactPopup } from './components/contact-popup'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { MobileNav } from './components/mobile-nav'
-import { CertificateModal } from './components/certificate-modal'
-import { fadeIn, fadeInLeft, staggerContainer } from './animations/fade'
-import { 
-  SiHtml5, 
-  SiCss3, 
-  SiJavascript, 
-  SiReact, 
-  SiNextdotjs, 
-  SiBootstrap, 
-  SiTypescript, 
-  SiTailwindcss,
-  SiNodedotjs,
-  SiGit,
-  SiGithub,
-  SiPostgresql,
-  SiPython
-} from 'react-icons/si'
 import { Tooltip } from './components/ui/tooltip'
+import { 
+  SiHtml5, SiCss3, SiJavascript, SiReact, SiNextdotjs, 
+  SiBootstrap, SiTypescript, SiTailwindcss, SiNodedotjs,
+  SiGit, SiGithub, SiPostgresql, SiPython
+} from 'react-icons/si'
+
+// Dynamicky importovat CertificateModal
+const CertificateModal = dynamic(() => import('./components/certificate-modal').then(mod => mod.CertificateModal), {
+  ssr: false,
+  loading: () => null
+})
 
 // Přidáme interface pro certifikát
 interface Certificate {
@@ -236,223 +231,278 @@ export default function Home() {
       {/* Main Content */}
       <main className="flex-grow container mx-auto px-4 pt-8 sm:pt-12 pb-24">
         <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          animate="animate"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
           className="space-y-16"
         >
           {/* Hero sekce */}
-          <motion.div 
-            variants={fadeIn}
-            className="text-center mb-8 sm:mb-12"
-          >
+          <div className="text-center mb-8 sm:mb-12">
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 py-[0.1em]">
               Vítejte v mém portfoliu
             </h1>
             <p className="text-lg sm:text-xl text-gray-400">
               Nadšenec do programování a moderních technologií
             </p>
-          </motion.div>
+          </div>
 
           {/* Projekty */}
-          <motion.section 
-            variants={fadeInLeft}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8"
-          >
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
             {projects.map((project) => (
-              <motion.div
-                key={project.id}
-                variants={fadeIn}
-                className="group relative h-full"
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                
-                <div className="relative h-full bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors">
-                  <div className="p-4 sm:p-6 h-full flex flex-col">
-                    {/* Hlavička karty */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        {project.icon}
-                        <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                          {project.name}
-                        </h3>
+              <Suspense key={project.id} fallback={<div className="h-[300px] bg-gray-800/50 rounded-xl animate-pulse" />}>
+                <motion.div
+                  className="group relative h-full"
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                  
+                  <div className="relative h-full bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors">
+                    <div className="p-4 sm:p-6 h-full flex flex-col">
+                      {/* Hlavička karty */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          {project.icon}
+                          <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                            {project.name}
+                          </h3>
+                        </div>
+                        <Tooltip text={`${expandedProjects[project.id] ? 'Sbalit' : 'Rozbalit'} detail projektu`}>
+                          <button
+                            onClick={() => toggleProject(project.id)}
+                            aria-label={`${expandedProjects[project.id] ? 'Sbalit' : 'Rozbalit'} detail projektu ${project.name}`}
+                            className="p-2 text-gray-400 hover:text-purple-400 transition-colors rounded-lg hover:bg-purple-500/10"
+                          >
+                            {expandedProjects[project.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                          </button>
+                        </Tooltip>
                       </div>
-                      <Tooltip text={`${expandedProjects[project.id] ? 'Sbalit' : 'Rozbalit'} detail projektu`}>
-                        <button
-                          onClick={() => toggleProject(project.id)}
-                          aria-label={`${expandedProjects[project.id] ? 'Sbalit' : 'Rozbalit'} detail projektu ${project.name}`}
-                          className="p-2 text-gray-400 hover:text-purple-400 transition-colors rounded-lg hover:bg-purple-500/10"
-                        >
-                          {expandedProjects[project.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                        </button>
-                      </Tooltip>
-                    </div>
 
-                    {/* Popis projektu - fixní výška */}
-                    <div className="h-[100px] overflow-auto mb-4 project-description">
-                      <p className="text-gray-300 text-base leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
+                      {/* Popis projektu - fixní výška */}
+                      <div className="h-[100px] overflow-auto mb-4 project-description">
+                        <p className="text-gray-300 text-base leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
 
-                    {/* Rozbalitelný obsah */}
-                    <motion.div 
-                      initial={false}
-                      animate={{ 
-                        height: expandedProjects[project.id] ? 'auto' : 0,
-                        opacity: expandedProjects[project.id] ? 1 : 0
-                      }}
-                      transition={{ 
-                        height: { duration: 0.2 },
-                        opacity: { duration: 0.1 }
-                      }}
-                      className="overflow-hidden"
-                    >
-                      <div className="space-y-4 mb-6">
-                        <div className="relative aspect-[16/9] rounded-lg overflow-hidden group">
-                          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-50 z-10" />
-                          <div className="absolute inset-0 bg-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity z-10" />
-                          
-                          <Image
-                            src={project.image}
-                            alt={project.name}
-                            fill
-                            className="object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-500"
-                            priority={project.id === 1}
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                          />
-                          
-                          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-gray-900 to-transparent z-20">
-                            <p className="text-sm text-gray-300">
-                              Náhled projektu
-                            </p>
+                      {/* Rozbalitelný obsah */}
+                      <motion.div 
+                        initial={false}
+                        animate={{ 
+                          height: expandedProjects[project.id] ? 'auto' : 0,
+                          opacity: expandedProjects[project.id] ? 1 : 0
+                        }}
+                        transition={{ 
+                          height: { duration: 0.2 },
+                          opacity: { duration: 0.1 }
+                        }}
+                        className="overflow-hidden"
+                      >
+                        <div className="space-y-4 mb-6">
+                          <div className="relative aspect-[16/9] rounded-lg overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-50 z-10" />
+                            <div className="absolute inset-0 bg-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity z-10" />
+                            
+                            <Image
+                              src={project.image}
+                              alt={project.name}
+                              fill
+                              className="object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-500"
+                              priority={project.id === 1}
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                            
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-gray-900 to-transparent z-20">
+                              <p className="text-sm text-gray-300">
+                                Náhled projektu
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </motion.div>
+                      </motion.div>
 
-                    {/* Tlačítko - přidat padding nahoře */}
-                    <div className="mt-auto pt-4">
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium 
-                          hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-purple-500/25
-                          active:scale-95 transform"
-                      >
-                        Přejít do Projektu
-                        <ExternalLink className="ml-2" size={18} />
-                      </a>
+                      {/* Tlačítko - přidat padding nahoře */}
+                      <div className="mt-auto pt-4">
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium 
+                            hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-purple-500/25
+                            active:scale-95 transform"
+                        >
+                          Přejít do Projektu
+                          <ExternalLink className="ml-2" size={18} />
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </Suspense>
             ))}
-          </motion.section>
+          </section>
 
           {/* Skills sekce */}
-          <motion.div
-            variants={fadeIn}
-            className="my-8 sm:my-16 group relative"
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 20 }}
-            viewport={{ once: true }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-            
-            <div className="relative bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors p-4 sm:p-8">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
-                  <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
-                    <div className="w-8 h-8">
-                      <Code className="w-full h-full text-purple-400" />
+          <Suspense fallback={<div className="h-[400px] bg-gray-800/50 rounded-xl animate-pulse" />}>
+            <div className="my-8 sm:my-16 group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+              
+              <div className="relative bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors p-4 sm:p-8">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 relative">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+                    <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
+                      <div className="w-8 h-8">
+                        <Code className="w-full h-full text-purple-400" />
+                      </div>
+                    </div>
+                  </div>
+                  <h2 id="tech_skills" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                    Technologie & Dovednosti
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Frontend */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-purple-400">Frontend</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      {frontendTechnologies.map((tech, index) => (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2, delay: index * 0.05 }}
+                          key={tech.name}
+                          className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                        >
+                          <div className="flex-shrink-0">
+                            {tech.icon}
+                          </div>
+                          <span className="text-gray-300 text-sm">{tech.name}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Backend & Tools */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-purple-400">Backend & Nástroje</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      {backendTechnologies.map((tech, index) => (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2, delay: index * 0.05 }}
+                          key={tech.name}
+                          className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                        >
+                          <div className="flex-shrink-0">
+                            {tech.icon}
+                          </div>
+                          <span className="text-gray-300 text-sm">{tech.name}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Přidat jazykové dovednosti */}
+                  <div className="space-y-4 md:col-span-2">
+                    <h4 className="text-lg font-semibold text-purple-400">Jazykové Dovednosti</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                      {languageSkills.map((lang, index) => (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2, delay: index * 0.05 }}
+                          key={lang.name}
+                          className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                        >
+                          <div className="flex items-center gap-2">
+                            {typeof lang.icon === 'string' ? (
+                              <span className="text-xs px-1.5 py-0.5 bg-gray-700 rounded text-gray-300">{lang.icon}</span>
+                            ) : (
+                              lang.icon
+                            )}
+                            <span className="text-gray-300 text-sm">{lang.name}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                              {lang.level}
+                            </span>
+                            {lang.certificate && (
+                              <Tooltip text="Zobrazit certifikát">
+                                <button
+                                  onClick={() => setSelectedCertificate({
+                                    courseName: `${lang.name} - ${lang.level}`,
+                                    certificates: [lang.certificate as Certificate]
+                                  })}
+                                  aria-label={`Zobrazit certifikát pro ${lang.name}`}
+                                  className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
+                                >
+                                  <Award size={16} />
+                                </button>
+                              </Tooltip>
+                            )}
+                          </div>
+                        </motion.div>
+                      ))}
                     </div>
                   </div>
                 </div>
-                <h2 id="tech_skills" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                  Technologie & Dovednosti
-                </h2>
               </div>
+            </div>
+          </Suspense>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Frontend */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-purple-400">Frontend</h4>
-                  <div className="grid grid-cols-2 gap-3">
-                    {frontendTechnologies.map((tech, index) => (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2, delay: index * 0.05 }}
-                        key={tech.name}
-                        className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
-                      >
-                        <div className="flex-shrink-0">
-                          {tech.icon}
-                        </div>
-                        <span className="text-gray-300 text-sm">{tech.name}</span>
-                      </motion.div>
-                    ))}
+          {/* Certifikáty & Kurzy Section */}
+          <Suspense fallback={<div className="h-[400px] bg-gray-800/50 rounded-xl animate-pulse" />}>
+            <div className="my-8 sm:my-16 group relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+              
+              <div className="relative bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors p-4 sm:p-8">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 relative">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+                    <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
+                      <div className="w-8 h-8">
+                        <Sparkles className="w-full h-full text-purple-400" />
+                      </div>
+                    </div>
                   </div>
+                  <h2 id="courses_excursions" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                    Kurzy & Výjezdy
+                  </h2>
                 </div>
 
-                {/* Backend & Tools */}
-                <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-purple-400">Backend & Nástroje</h4>
-                  <div className="grid grid-cols-2 gap-3">
-                    {backendTechnologies.map((tech, index) => (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2, delay: index * 0.05 }}
-                        key={tech.name}
-                        className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
-                      >
-                        <div className="flex-shrink-0">
-                          {tech.icon}
-                        </div>
-                        <span className="text-gray-300 text-sm">{tech.name}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Přidat jazykové dovednosti */}
-                <div className="space-y-4 md:col-span-2">
-                  <h4 className="text-lg font-semibold text-purple-400">Jazykové Dovednosti</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    {languageSkills.map((lang, index) => (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2, delay: index * 0.05 }}
-                        key={lang.name}
-                        className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
-                      >
+                <div className="space-y-3">
+                  {courses.map((course, index) => (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.1 }}
+                      key={course.name}
+                      className="p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-all duration-300 group"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                          {course.name}
+                        </h4>
                         <div className="flex items-center gap-2">
-                          {typeof lang.icon === 'string' ? (
-                            <span className="text-xs px-1.5 py-0.5 bg-gray-700 rounded text-gray-300">{lang.icon}</span>
-                          ) : (
-                            lang.icon
-                          )}
-                          <span className="text-gray-300 text-sm">{lang.name}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
+                          <span className="text-gray-400 text-sm">{course.issuer}</span>
                           <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                            {lang.level}
+                            {course.date}
                           </span>
-                          {lang.certificate && (
+                          {course.certificate && (
                             <Tooltip text="Zobrazit certifikát">
                               <button
                                 onClick={() => setSelectedCertificate({
-                                  courseName: `${lang.name} - ${lang.level}`,
-                                  certificates: [lang.certificate as Certificate]
+                                  courseName: course.name,
+                                  certificates: Array.isArray(course.certificate) 
+                                    ? course.certificate 
+                                    : course.certificate 
+                                    ? [course.certificate]
+                                    : []
                                 })}
-                                aria-label={`Zobrazit certifikát pro ${lang.name}`}
+                                aria-label={`Zobrazit certifikát pro ${course.name}`}
                                 className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
                               >
                                 <Award size={16} />
@@ -460,84 +510,16 @@ export default function Home() {
                             </Tooltip>
                           )}
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Certifikáty & Kurzy Section */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.4 }}
-            className="my-8 sm:my-16 group relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-            
-            <div className="relative bg-gray-900 rounded-xl border border-gray-800 hover:border-purple-500/30 transition-colors p-4 sm:p-8">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
-                  <div className="relative h-full w-full p-2.5 bg-gray-800/80 rounded-lg group-hover:bg-gray-800/90 transition-colors flex items-center justify-center">
-                    <div className="w-8 h-8">
-                      <Sparkles className="w-full h-full text-purple-400" />
-                    </div>
-                  </div>
-                </div>
-                <h2 id="courses_excursions" className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                  Kurzy & Výjezdy
-                </h2>
-              </div>
-
-              <div className="space-y-3">
-                {courses.map((course, index) => (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2, delay: index * 0.1 }}
-                    key={course.name}
-                    className="p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                        {course.name}
-                      </h4>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400 text-sm">{course.issuer}</span>
-                        <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                          {course.date}
-                        </span>
-                        {course.certificate && (
-                          <Tooltip text="Zobrazit certifikát">
-                            <button
-                              onClick={() => setSelectedCertificate({
-                                courseName: course.name,
-                                certificates: Array.isArray(course.certificate) 
-                                  ? course.certificate 
-                                  : course.certificate 
-                                  ? [course.certificate]
-                                  : []
-                              })}
-                              aria-label={`Zobrazit certifikát pro ${course.name}`}
-                              className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
-                            >
-                              <Award size={16} />
-                            </button>
-                          </Tooltip>
-                        )}
                       </div>
-                    </div>
-                    <p className="text-gray-300 text-sm">
-                      {course.description}
-                    </p>
-                  </motion.div>
-                ))}
+                      <p className="text-gray-300 text-sm">
+                        {course.description}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
-          </motion.div>
+          </Suspense>
 
           {/* Modal pro certifikát */}
           {selectedCertificate && (
