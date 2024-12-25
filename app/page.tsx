@@ -190,10 +190,10 @@ export default function Home() {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="sticky top-0 bg-gray-900/90 shadow-lg text-white py-3 sm:py-4 border-b border-gray-800/50 z-50">
-        <div className="container mx-auto px-4">
+    <div className="min-h-screen flex flex-col overflow-x-hidden w-full">
+      {/* Header - fixed s původním designem */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 shadow-lg text-white py-3 sm:py-4 border-b border-gray-800/50">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex items-center justify-between h-12 sm:h-auto">
             {/* Logo a název */}
             <div className="flex items-center gap-3 group">
@@ -228,8 +228,8 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-grow container mx-auto px-4 pt-8 sm:pt-12 pb-24">
+      {/* Main content */}
+      <main className="flex-grow pt-24 pb-20 container mx-auto px-4 max-w-7xl">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -247,7 +247,7 @@ export default function Home() {
           </div>
 
           {/* Projekty */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 w-full">
             {projects.map((project) => (
               <Suspense key={project.id} fallback={<div className="h-[300px] bg-gray-800/50 rounded-xl animate-pulse" />}>
                 <motion.div
@@ -533,9 +533,9 @@ export default function Home() {
         </motion.div>
       </main>
 
-      {/* Footer */}
-      <footer className="sticky bottom-0 bg-gray-900/60 backdrop-blur-xl py-3 sm:py-4 border-t border-gray-800/20">
-        <div className="container mx-auto px-4">
+      {/* Footer - fixed na spodku */}
+      <footer className="fixed bottom-0 left-0 right-0 bg-gray-900/60 backdrop-blur-xl py-3 sm:py-4 border-t border-gray-800/20 w-full">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex justify-center items-center">
             <div className="flex items-center">
               <span className="text-xs sm:text-sm text-gray-400">© 2024</span>
