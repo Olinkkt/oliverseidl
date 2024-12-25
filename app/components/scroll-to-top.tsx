@@ -30,7 +30,7 @@ export function ScrollToTop() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50">
+        <div className="fixed sm:bottom-24 bottom-16 left-1/2 -translate-x-1/2 z-50">
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
