@@ -189,6 +189,8 @@ export default function Home() {
     setExpandedProjects(prev => ({ ...prev, [id]: !prev[id] }))
   }
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden w-full">
       {/* Header - fixed s původním designem */}
@@ -538,7 +540,7 @@ export default function Home() {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex justify-center items-center">
             <div className="flex items-center">
-              <span className="text-xs sm:text-sm text-gray-400">© 2024</span>
+              <span className="text-xs sm:text-sm text-gray-400">© {new Date().getFullYear()}</span>
               <span className="mx-2 text-xs sm:text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                 Oliver Seidl
               </span>
