@@ -193,8 +193,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden w-full">
-      {/* Header - fixed s původním designem */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 shadow-lg text-white py-3 sm:py-4 border-b border-gray-800/50">
+      {/* Header - fixed */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/60 backdrop-blur-xl py-3 sm:py-4 border-b border-gray-800/20">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex items-center justify-between h-12 sm:h-auto">
             {/* Logo a název */}
@@ -238,8 +238,8 @@ export default function Home() {
           transition={{ duration: 0.3 }}
           className="space-y-16"
         >
-          {/* Hero sekce */}
-          <div className="text-center mb-8 sm:mb-12">
+          {/* Hero sekce - upravené odsazení pro symetrii */}
+          <div className="text-center mt-4 sm:mt-8 mb-16">
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 py-[0.1em]">
               Vítejte v mém portfoliu
             </h1>
@@ -535,8 +535,8 @@ export default function Home() {
         </motion.div>
       </main>
 
-      {/* Footer - fixed na spodku */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-gray-900/60 backdrop-blur-xl py-3 sm:py-4 border-t border-gray-800/20 w-full">
+      {/* Footer - statický */}
+      <footer className="bg-gray-900/60 backdrop-blur-xl py-3 sm:py-4 border-t border-gray-800/20 w-full">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex justify-center items-center">
             <div className="flex items-center">
