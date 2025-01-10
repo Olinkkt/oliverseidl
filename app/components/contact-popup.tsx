@@ -15,9 +15,9 @@ export function ContactPopup({ isMobile = false }: ContactPopupProps) {
   const contacts = [
     { 
       type: 'Email',
-      value: 'seidl.oliver@icloud.com',
+      value: 'oliver@seidltech.cz',
       icon: <Mail className="w-5 h-5" />,
-      link: 'mailto:seidl.oliver@icloud.com'
+      link: 'mailto:oliver@seidltech.cz'
     },
     { 
       type: 'Instagram',
