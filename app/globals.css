@@ -15,6 +15,7 @@ body {
     rgb(var(--background-start-rgb)),
     rgb(var(--background-end-rgb))
   );
+  overflow-x: hidden;
 }
 
 @layer base {

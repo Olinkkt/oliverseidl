@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { ScrollToTop } from './components/scroll-to-top'
-import { FloatingContact } from './components/floating-contact'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -110,7 +109,6 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
         <ScrollToTop />
-        <FloatingContact />
         <Toaster
           position="bottom-right"
           toastOptions={{
