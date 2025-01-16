@@ -14,11 +14,9 @@ export default function Contact() {
           </div>
           <div className="flex items-center">
             <Mail className="text-[#5E548E] mr-2" size={24} />
-            <div>
-              <a href="mailto:seidl.oliver@icloud.com" className="text-[#5E548E] hover:underline">seidl.oliver@icloud.com</a>
-              <br />
-              <a href="mailto:oliver.seidl@zs-zbraslav.cz" className="text-[#5E548E] hover:underline">oliver.seidl@zs-zbraslav.cz</a>
-            </div>
+            <a href="mailto:oliver@seidltech.eu" className="text-[#5E548E] hover:underline">
+              oliver@seidltech.cz
+            </a>
           </div>
           <div className="flex items-center">
             <Phone className="text-[#5E548E] mr-2" size={24} />
