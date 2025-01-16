@@ -10,8 +10,7 @@ import Image from 'next/image'
 import { MobileNav } from './components/mobile-nav'
 import { Tooltip } from './components/ui/tooltip'
 import { 
-  SiHtml5, SiCss3, SiJavascript, SiReact, SiNextdotjs, 
-  SiBootstrap, SiTypescript, SiTailwindcss, SiNodedotjs,
+  SiHtml5, SiCss3, SiBootstrap,
   SiGit, SiGithub, SiPostgresql, SiPython
 } from 'react-icons/si'
 
@@ -71,16 +70,10 @@ const projects = [
 const frontendTechnologies = [
   { name: 'HTML', icon: <SiHtml5 className="w-5 h-5 text-[#E34F26]" /> },
   { name: 'CSS', icon: <SiCss3 className="w-5 h-5 text-[#1572B6]" /> },
-  { name: 'JavaScript', icon: <SiJavascript className="w-5 h-5 text-[#F7DF1E]" /> },
-  { name: 'React', icon: <SiReact className="w-5 h-5 text-[#61DAFB]" /> },
-  { name: 'Next.js', icon: <SiNextdotjs className="w-5 h-5 text-white" /> },
   { name: 'Bootstrap 5', icon: <SiBootstrap className="w-5 h-5 text-[#7952B3]" /> },
-  { name: 'TypeScript', icon: <SiTypescript className="w-5 h-5 text-[#3178C6]" /> },
-  { name: 'Tailwind CSS', icon: <SiTailwindcss className="w-5 h-5 text-[#06B6D4]" /> },
 ]
 
 const backendTechnologies = [
-  { name: 'Node.js', icon: <SiNodedotjs className="w-5 h-5 text-[#339933]" /> },
   { name: 'Git', icon: <SiGit className="w-5 h-5 text-[#F05032]" /> },
   { name: 'GitHub', icon: <SiGithub className="w-5 h-5 text-white" /> },
   { name: 'PostgreSQL', icon: <SiPostgresql className="w-5 h-5 text-[#4169E1]" /> },
