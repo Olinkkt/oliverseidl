@@ -11,7 +11,7 @@ import { MobileNav } from './components/mobile-nav'
 import { Tooltip } from './components/ui/tooltip'
 import { 
   SiHtml5, SiCss3, SiBootstrap,
-  SiGit, SiGithub, SiPostgresql, SiPython
+  SiGit, SiGithub, SiPostgresql, SiPython, SiDocker
 } from 'react-icons/si'
 
 // Dynamicky importovat CertificateModal
@@ -24,6 +24,7 @@ const CertificateModal = dynamic(() => import('./components/certificate-modal').
 interface Certificate {
   thumbnail: string;
   url?: string;
+  verifyUrl?: string;
 }
 
 interface Course {
@@ -68,16 +69,54 @@ const projects = [
 ]
 
 const frontendTechnologies = [
-  { name: 'HTML', icon: <SiHtml5 className="w-5 h-5 text-[#E34F26]" /> },
-  { name: 'CSS', icon: <SiCss3 className="w-5 h-5 text-[#1572B6]" /> },
-  { name: 'Bootstrap 5', icon: <SiBootstrap className="w-5 h-5 text-[#7952B3]" /> },
+  { 
+    name: 'HTML', 
+    icon: <SiHtml5 className="w-5 h-5 text-[#E34F26]" />,
+    description: 'Pokročilá znalost sémantického HTML5 a strukturování webových stránek.'
+  },
+  { 
+    name: 'CSS', 
+    icon: <SiCss3 className="w-5 h-5 text-[#1572B6]" />,
+    description: 'Zkušenosti s responzivním designem, flexbox a CSS grid layoutem.'
+  },
+  { 
+    name: 'Bootstrap 5', 
+    icon: <SiBootstrap className="w-5 h-5 text-[#7952B3]" />,
+    description: 'Praktické využití pro rychlý vývoj responzivních webů.'
+  },
 ]
 
 const backendTechnologies = [
-  { name: 'Git', icon: <SiGit className="w-5 h-5 text-[#F05032]" /> },
-  { name: 'GitHub', icon: <SiGithub className="w-5 h-5 text-white" /> },
-  { name: 'PostgreSQL', icon: <SiPostgresql className="w-5 h-5 text-[#4169E1]" /> },
-  { name: 'Python', icon: <SiPython className="w-5 h-5 text-[#3776AB]" /> },
+  { 
+    name: 'Git', 
+    icon: <SiGit className="w-5 h-5 text-[#F05032]" />,
+    description: 'Verzování kódu, práce s větvemi a základní Git operace.'
+  },
+  { 
+    name: 'GitHub', 
+    icon: <SiGithub className="w-5 h-5 text-white" />,
+    description: 'Správa repozitářů, pull requesty a spolupráce v týmu.'
+  },
+  { 
+    name: 'PostgreSQL', 
+    icon: <SiPostgresql className="w-5 h-5 text-[#4169E1]" />,
+    description: 'Základní znalost SQL a práce s relačními databázemi.'
+  },
+  { 
+    name: 'Python', 
+    icon: <SiPython className="w-5 h-5 text-[#3776AB]" />,
+    description: 'Základní znalost Pythonu a OOP.'
+  },
+  { 
+    name: 'Docker', 
+    icon: <SiDocker className="w-5 h-5 text-[#0DB7ED]" />,
+    certificate: {
+      url: '/certificates/google-cloud_docker_certificate_basic.pdf',
+      thumbnail: '/images/thumbnails/google-cloud_docker_certificate_basic.png',
+      verifyUrl: 'https://www.coursera.org/verify/0CJ6VBQWJXK4'
+    },
+    description: 'Kontejnerizace aplikací a základní práce s Docker kontejnery.'
+  }
 ]
 
 const courses: Course[] = [
@@ -368,12 +407,17 @@ export default function Home() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.2, delay: index * 0.05 }}
                           key={tech.name}
-                          className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                          className="group min-h-[42px] flex flex-col p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all hover:min-h-[80px]"
                         >
-                          <div className="flex-shrink-0">
-                            {tech.icon}
+                          <div className="flex items-center gap-2">
+                            <div className="flex-shrink-0">
+                              {tech.icon}
+                            </div>
+                            <span className="text-gray-300 text-sm">{tech.name}</span>
                           </div>
-                          <span className="text-gray-300 text-sm">{tech.name}</span>
+                          <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-[100px] opacity-0 group-hover:opacity-100">
+                            <p className="text-xs text-gray-400 mt-2">{tech.description}</p>
+                          </div>
                         </motion.div>
                       ))}
                     </div>
@@ -389,12 +433,33 @@ export default function Home() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.2, delay: index * 0.05 }}
                           key={tech.name}
-                          className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                          className="group min-h-[42px] flex flex-col p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all hover:min-h-[80px]"
                         >
-                          <div className="flex-shrink-0">
-                            {tech.icon}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className="flex-shrink-0">
+                                {tech.icon}
+                              </div>
+                              <span className="text-gray-300 text-sm">{tech.name}</span>
+                            </div>
+                            {tech.certificate && (
+                              <Tooltip text="Zobrazit certifikát">
+                                <button
+                                  onClick={() => setSelectedCertificate({
+                                    courseName: tech.name,
+                                    certificates: [tech.certificate]
+                                  })}
+                                  aria-label={`Zobrazit certifikát pro ${tech.name}`}
+                                  className="flex-shrink-0 p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
+                                >
+                                  <Award size={16} />
+                                </button>
+                              </Tooltip>
+                            )}
                           </div>
-                          <span className="text-gray-300 text-sm">{tech.name}</span>
+                          <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-[100px] opacity-0 group-hover:opacity-100">
+                            <p className="text-xs text-gray-400 mt-2">{tech.description}</p>
+                          </div>
                         </motion.div>
                       ))}
                     </div>
@@ -410,7 +475,7 @@ export default function Home() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.2, delay: index * 0.05 }}
                           key={lang.name}
-                          className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                          className="h-[42px] flex items-center justify-between p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
                         >
                           <div className="flex items-center gap-2">
                             {typeof lang.icon === 'string' ? (
@@ -432,7 +497,7 @@ export default function Home() {
                                     certificates: [lang.certificate as Certificate]
                                   })}
                                   aria-label={`Zobrazit certifikát pro ${lang.name}`}
-                                  className="p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
+                                  className="flex-shrink-0 p-1.5 text-purple-400 hover:bg-purple-500/10 rounded-lg transition-colors"
                                 >
                                   <Award size={16} />
                                 </button>

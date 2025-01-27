@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Modal } from './ui/modal'
 import { Mail } from 'lucide-react'
 import { FaInstagram, FaGithub, FaXTwitter, FaFacebook } from 'react-icons/fa6'
+import Image from 'next/image'
 
 interface ContactPopupProps {
   isMobile?: boolean
@@ -27,7 +28,7 @@ export function ContactPopup({ isMobile = false }: ContactPopupProps) {
     },
     { 
       type: 'GitHub',
-      value: 'Olinkkt',
+      value: 'olinkkt',
       icon: <FaGithub className="w-5 h-5" />,
       link: 'https://github.com/Olinkkt'
     },
@@ -42,6 +43,18 @@ export function ContactPopup({ isMobile = false }: ContactPopupProps) {
       value: 'Oliver Seidl',
       icon: <FaFacebook className="w-5 h-5" />,
       link: 'https://facebook.com/profile.php?id=100074304675281'
+    },
+    {
+      type: 'Coursera',
+      value: 'Oliver Seidl',
+      icon: <Image 
+        src="/images/coursera-logo.svg" 
+        alt="Coursera logo" 
+        width={20} 
+        height={20}
+        className="invert opacity-50 group-hover:opacity-70"
+      />,
+      link: 'https://www.coursera.org/learner/oliver-seidl'
     }
   ]
 
