@@ -76,7 +76,8 @@ export default function RootLayout({
     <html lang="cs">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         {/* Strukturovaná data pro Google */}
         <script
           type="application/ld+json"

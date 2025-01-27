@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Vnější světle modrý rámeček -->
+  <rect width="240" height="240" rx="42" fill="#7FB5FF"/>
+  
+  <!-- Vnitřní tmavě modrý obdélník -->
+  <rect x="20" y="20" width="200" height="200" rx="30" fill="#001E36"/>
+  
+  <!-- Rozdělující gradient -->
+  <rect x="120" y="20" width="100" height="200" fill="#1E3A8A" opacity="0.3"/>
+  
+  <!-- Text "Pf" -->
+  <text x="40" y="155" fill="#31A8FF" font-family="Arial" font-weight="bold" font-size="110">P</text>
+  <text x="130" y="155" fill="#31A8FF" font-family="Arial" font-weight="bold" font-size="110">f</text>
+</svg> 
