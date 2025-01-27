@@ -216,6 +216,7 @@ export default function Home() {
     courseName: string;
     certificates: Certificate[];
   } | null>(null);
+  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
 
   const toggleProject = (id: number) => {
     setExpandedProjects(prev => ({ ...prev, [id]: !prev[id] }))
@@ -400,14 +401,16 @@ export default function Home() {
                   {/* Frontend */}
                   <div className="space-y-4">
                     <h4 className="text-lg font-semibold text-purple-400">Frontend</h4>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3 [&>*]:h-fit">
                       {frontendTechnologies.map((tech, index) => (
                         <motion.div 
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.2, delay: index * 0.05 }}
                           key={tech.name}
-                          className="group min-h-[42px] flex flex-col p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all hover:min-h-[80px]"
+                          className="flex flex-col p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                          onMouseEnter={() => setHoveredTech(tech.name)}
+                          onMouseLeave={() => setHoveredTech(null)}
                         >
                           <div className="flex items-center gap-2">
                             <div className="flex-shrink-0">
@@ -415,7 +418,13 @@ export default function Home() {
                             </div>
                             <span className="text-gray-300 text-sm">{tech.name}</span>
                           </div>
-                          <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-[100px] opacity-0 group-hover:opacity-100">
+                          <div 
+                            className="overflow-hidden transition-all duration-300"
+                            style={{
+                              maxHeight: hoveredTech === tech.name ? '200px' : '0',
+                              opacity: hoveredTech === tech.name ? 1 : 0,
+                            }}
+                          >
                             <p className="text-xs text-gray-400 mt-2">{tech.description}</p>
                           </div>
                         </motion.div>
@@ -426,14 +435,16 @@ export default function Home() {
                   {/* Backend & Tools */}
                   <div className="space-y-4">
                     <h4 className="text-lg font-semibold text-purple-400">Backend & Nástroje</h4>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3 [&>*]:h-fit">
                       {backendTechnologies.map((tech, index) => (
                         <motion.div 
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.2, delay: index * 0.05 }}
                           key={tech.name}
-                          className="group min-h-[42px] flex flex-col p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all hover:min-h-[80px]"
+                          className="flex flex-col p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 hover:translate-y-[-2px] transition-all"
+                          onMouseEnter={() => setHoveredTech(tech.name)}
+                          onMouseLeave={() => setHoveredTech(null)}
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
@@ -457,7 +468,13 @@ export default function Home() {
                               </Tooltip>
                             )}
                           </div>
-                          <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-[100px] opacity-0 group-hover:opacity-100">
+                          <div 
+                            className="overflow-hidden transition-all duration-300"
+                            style={{
+                              maxHeight: hoveredTech === tech.name ? '200px' : '0',
+                              opacity: hoveredTech === tech.name ? 1 : 0,
+                            }}
+                          >
                             <p className="text-xs text-gray-400 mt-2">{tech.description}</p>
                           </div>
                         </motion.div>
