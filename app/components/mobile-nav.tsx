@@ -34,9 +34,9 @@ export function MobileNav() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-              className="fixed right-0 top-0 h-full w-64 bg-gray-900 border-l border-gray-800 p-6 z-50"
+              className="fixed right-0 top-0 bottom-0 min-h-screen w-64 bg-gray-900/95 backdrop-blur-xl border-l border-gray-800 p-6 z-50 overflow-y-auto"
             >
-              <div className="flex justify-end mb-6">
+              <div className="flex justify-end mb-8">
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2 text-gray-400 hover:text-purple-400 transition-colors rounded-lg hover:bg-purple-500/10"
@@ -45,11 +45,11 @@ export function MobileNav() {
                 </button>
               </div>
               
-              <nav className="space-y-4">
-                <div className="mobile-nav-item">
+              <nav className="flex flex-col items-end space-y-4">
+                <div className="mobile-nav-item w-full flex justify-end">
                   <AboutMePopup />
                 </div>
-                <div className="mobile-nav-item">
+                <div className="mobile-nav-item w-full flex justify-end">
                   <ContactPopup isMobile={true} />
                 </div>
               </nav>
