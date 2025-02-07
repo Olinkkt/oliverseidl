@@ -151,7 +151,7 @@ const courses: Course[] = [
         thumbnail: '/images/thumbnails/english_camp_certificate_02.png'
       },
       {
-        thumbnail: 'missing'
+        thumbnail: '/images/thumbnails/english_camp_certificate_03.png'
       },
       {
         thumbnail: '/images/thumbnails/english_camp_certificate_04.png'
