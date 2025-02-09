@@ -125,6 +125,11 @@ const courses: Course[] = [
     issuer: 'SSPŠ',
     date: '2024',
     description: 'Jednodenní technologický workshop kombinující programování mikrokontrolérů Raspberry Pi s tvorbou interaktivních projektů a základy vývoje webových aplikací s využitím moderních technologií.',
+    certificate: [
+      {
+        thumbnail: '/images/thumbnails/techdays_certificate_01.png' 
+      }
+    ]
   },
   { 
     name: 'AI Mastery',
